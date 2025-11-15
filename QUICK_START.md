@@ -130,6 +130,3 @@ ports:
 - [TRAINING_GUIDE.md](model_finetuning/TRAINING_GUIDE.md) - คู่มือการฝึกโมเดล
 - [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) - คู่มือการ deploy แบบละเอียด
 
-## คำเตือน
-
-⚠️ โปรเจคนี้เป็นเพื่อการศึกษาเท่านั้น การใช้งานจริงอาจผิดกฎหมาย
