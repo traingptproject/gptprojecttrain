@@ -167,7 +167,7 @@ def create_trainer(model, tokenizer, train_dataset, eval_dataset, config: Workfl
         logging_dir=config.training.logging_dir,
         logging_strategy=config.training.logging_strategy,
         logging_steps=config.training.logging_steps,
-        evaluation_strategy=config.training.evaluation_strategy,
+        eval_strategy=config.training.eval_strategy,
         eval_steps=config.training.eval_steps,
         save_strategy=config.training.save_strategy,
         save_steps=config.training.save_steps,

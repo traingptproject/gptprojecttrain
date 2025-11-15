@@ -60,7 +60,7 @@ class TrainingConfig:
     logging_steps: int = 10
     report_to: str = "tensorboard"
     
-    evaluation_strategy: str = "epoch"
+    eval_strategy: str = "epoch"
     eval_steps: Optional[int] = None
     
     save_strategy: str = "epoch"

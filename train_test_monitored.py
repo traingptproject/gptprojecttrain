@@ -197,7 +197,7 @@ def create_trainer(model, tokenizer, train_dataset, eval_dataset, controller):
             logging_dir="./logs_test",
             logging_strategy="steps",
             logging_steps=10,
-            evaluation_strategy="epoch",
+            eval_strategy="epoch",
             save_strategy="epoch",
             save_total_limit=2,
             load_best_model_at_end=True,

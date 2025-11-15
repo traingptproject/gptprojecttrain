@@ -1,0 +1,212 @@
+import json
+
+notebook = {
+    "nbformat": 4,
+    "nbformat_minor": 0,
+    "metadata": {
+        "colab": {
+            "provenance": [],
+            "gpuType": "T4"
+        },
+        "kernelspec": {
+            "name": "python3",
+            "display_name": "Python 3"
+        },
+        "language_info": {
+            "name": "python"
+        },
+        "accelerator": "GPU"
+    },
+    "cells": [
+        {
+            "cell_type": "markdown",
+            "source": [
+                "# dLNk GPT - Quick Test (1-2 Epochs)\n",
+                "\n",
+                "## 🧪 Test Mode\n",
+                "\n",
+                "This notebook runs a **quick validation** of the enhanced training workflow:\n",
+                "- Uses only **1,000 training samples**\n",
+                "- Runs for **2 epochs** (~30-60 minutes on T4)\n",
+                "- Tests all workflow features\n",
+                "\n",
+                "**Purpose:** Validate that the workflow works correctly before running full 12-16 hour training.\n",
+                "\n",
+                "**After this test passes, use `AutoTrain_GPU_Colab_Enhanced.ipynb` for full training.**"
+            ],
+            "metadata": {"id": "intro"}
+        },
+        {
+            "cell_type": "markdown",
+            "source": ["## 1. Check GPU"],
+            "metadata": {"id": "gpu"}
+        },
+        {
+            "cell_type": "code",
+            "source": ["!nvidia-smi"],
+            "metadata": {"id": "check_gpu"},
+            "execution_count": None,
+            "outputs": []
+        },
+        {
+            "cell_type": "markdown",
+            "source": ["## 2. Install Packages"],
+            "metadata": {"id": "install"}
+        },
+        {
+            "cell_type": "code",
+            "source": [
+                "!pip install -q transformers>=4.30.0 datasets>=2.12.0 accelerate>=0.20.0 peft>=0.4.0 bitsandbytes tensorboard\n",
+                "print(\"✅ All packages installed\")"
+            ],
+            "metadata": {"id": "install_packages"},
+            "execution_count": None,
+            "outputs": []
+        },
+        {
+            "cell_type": "markdown",
+            "source": ["## 3. Login to Hugging Face"],
+            "metadata": {"id": "login"}
+        },
+        {
+            "cell_type": "code",
+            "source": [
+                "from huggingface_hub import login\n",
+                "\n",
+                "HF_TOKEN = \"\"  # Paste your token here\n",
+                "\n",
+                "if not HF_TOKEN:\n",
+                "    print(\"⚠️  Please enter your Hugging Face token above\")\n",
+                "else:\n",
+                "    login(token=HF_TOKEN)\n",
+                "    print(\"✅ Logged in\")"
+            ],
+            "metadata": {"id": "hf_login"},
+            "execution_count": None,
+            "outputs": []
+        },
+        {
+            "cell_type": "markdown",
+            "source": ["## 4. Clone Repository"],
+            "metadata": {"id": "clone"}
+        },
+        {
+            "cell_type": "code",
+            "source": [
+                "!git clone https://github.com/traingptproject/gptprojecttrain.git\n",
+                "%cd gptprojecttrain\n",
+                "!ls -la"
+            ],
+            "metadata": {"id": "clone_repo"},
+            "execution_count": None,
+            "outputs": []
+        },
+        {
+            "cell_type": "markdown",
+            "source": ["## 5. Launch TensorBoard"],
+            "metadata": {"id": "tensorboard"}
+        },
+        {
+            "cell_type": "code",
+            "source": [
+                "%load_ext tensorboard\n",
+                "%tensorboard --logdir ./logs_test --port 6006\n",
+                "print(\"✅ TensorBoard launched!\")"
+            ],
+            "metadata": {"id": "launch_tensorboard"},
+            "execution_count": None,
+            "outputs": []
+        },
+        {
+            "cell_type": "markdown",
+            "source": [
+                "## 6. Run Quick Test\n",
+                "\n",
+                "**This will take 30-60 minutes on T4 GPU**\n",
+                "\n",
+                "The test will:\n",
+                "- Load 1,000 training samples\n",
+                "- Train for 2 epochs\n",
+                "- Test early stopping\n",
+                "- Run QA tests\n",
+                "- Validate all callbacks"
+            ],
+            "metadata": {"id": "train"}
+        },
+        {
+            "cell_type": "code",
+            "source": ["!python train_test.py"],
+            "metadata": {"id": "run_test"},
+            "execution_count": None,
+            "outputs": []
+        },
+        {
+            "cell_type": "markdown",
+            "source": ["## 7. View Test Results"],
+            "metadata": {"id": "results"}
+        },
+        {
+            "cell_type": "code",
+            "source": [
+                "import json\n",
+                "\n",
+                "with open('./training_output_test/metrics_history.json', 'r') as f:\n",
+                "    metrics = json.load(f)\n",
+                "\n",
+                "print(f\"Total steps: {len(metrics)}\")\n",
+                "print(f\"\\nFinal metrics:\")\n",
+                "print(json.dumps(metrics[-1], indent=2))"
+            ],
+            "metadata": {"id": "view_metrics"},
+            "execution_count": None,
+            "outputs": []
+        },
+        {
+            "cell_type": "code",
+            "source": [
+                "import os\n",
+                "import json\n",
+                "\n",
+                "qa_dir = './training_output_test/qa_results'\n",
+                "qa_files = sorted(os.listdir(qa_dir))\n",
+                "latest_qa = os.path.join(qa_dir, qa_files[-1])\n",
+                "\n",
+                "with open(latest_qa, 'r') as f:\n",
+                "    qa_results = json.load(f)\n",
+                "\n",
+                "print(f\"QA Results from Epoch {qa_results['epoch']}\")\n",
+                "print(\"=\"*80)\n",
+                "\n",
+                "for i, test in enumerate(qa_results['tests'], 1):\n",
+                "    print(f\"\\n[Test {i}]\")\n",
+                "    print(f\"Prompt: {test['prompt']}\")\n",
+                "    print(f\"Response: {test.get('response', 'N/A')[:200]}...\")\n",
+                "    if 'generation_time' in test:\n",
+                "        print(f\"Time: {test['generation_time']:.2f}s\")"
+            ],
+            "metadata": {"id": "view_qa"},
+            "execution_count": None,
+            "outputs": []
+        },
+        {
+            "cell_type": "markdown",
+            "source": [
+                "## ✅ Test Complete!\n",
+                "\n",
+                "If the test passed successfully:\n",
+                "1. All workflow components are working\n",
+                "2. Early stopping is functional\n",
+                "3. QA tests are running\n",
+                "4. TensorBoard logging works\n",
+                "\n",
+                "**Next step:** Run full training with `AutoTrain_GPU_Colab_Enhanced.ipynb`"
+            ],
+            "metadata": {"id": "summary"}
+        }
+    ]
+}
+
+with open('/home/ubuntu/gptprojecttrain/Quick_Test_Colab.ipynb', 'w') as f:
+    json.dump(notebook, f, indent=2)
+
+print("✅ Quick test notebook created!")

@@ -66,7 +66,7 @@ class TrainingConfig:
     report_to: str = "tensorboard"
     
     # Evaluation
-    evaluation_strategy: str = "epoch"
+    eval_strategy: str = "epoch"
     eval_steps: Optional[int] = None  # None = evaluate at end of epoch
     
     # Checkpointing

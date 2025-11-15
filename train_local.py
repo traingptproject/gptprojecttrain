@@ -375,7 +375,7 @@ try:
         logging_steps=LOGGING_STEPS,
         save_steps=SAVE_STEPS,
         eval_steps=EVAL_STEPS,
-        evaluation_strategy="steps",
+        eval_strategy="steps",
         save_total_limit=3,  # Keep more checkpoints for comparison
         fp16=USE_FP16 and not USE_8BIT,
         dataloader_num_workers=4,
