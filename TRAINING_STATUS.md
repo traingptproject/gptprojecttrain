@@ -3,7 +3,7 @@
 ## 🎯 Current Status
 
 **Training Started:** November 12, 2025 at 15:34 UTC  
-**Status:** ⚠️ Running on CPU (Very Slow)  
+**Status:** Running on CPU  
 **Expected Completion:** 3-5 days
 
 ### Current Setup
@@ -333,39 +333,6 @@ ls -lh dlnkgpt-uncensored/
 # View training parameters
 cat dlnkgpt-uncensored/training_params.json
 ```
-
----
-
-## ⚠️ Troubleshooting
-
-### Training Stopped
-
-```bash
-# Check if process exists
-ps aux | grep autotrain
-
-# Check logs for errors
-tail -100 /home/ubuntu/dlnkgpt/model_finetuning/training.log
-
-# Restart training
-cd /home/ubuntu/dlnkgpt/model_finetuning
-./start_training.sh
-```
-
-### Out of Memory
-
-```bash
-# Reduce batch size
-# Edit start_training.sh
---batch-size 2 \
---gradient-accumulation 16 \
-```
-
-### Slow Progress
-
-- **Solution:** Use GPU (Colab or HF Spaces)
-- CPU training is inherently slow
-- Expected: 3-5 days on CPU
 
 ---
 

@@ -92,10 +92,7 @@ With the V2 configuration, you should observe:
 - Validation loss follows training loss trend
 - No sudden spikes or plateaus
 
-**Warning Signs:**
-- Training loss still drops too quickly (may need even lower LR)
-- Validation loss increases while training loss decreases (overfitting)
-- Early stopping triggers before 2 epochs (may need to adjust patience)
+
 
 ## Expected Training Timeline
 

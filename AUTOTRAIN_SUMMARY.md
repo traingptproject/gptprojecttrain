@@ -305,28 +305,6 @@ dlnkgpt/
 
 ---
 
-## ⚠️ Important Notes
-
-### About CPU Training:
-- ❌ **NOT RECOMMENDED** - Very slow (3-5 days)
-- ❌ May fail due to memory constraints
-- ❌ No performance benefits
-- ✅ **Use GPU instead** (Colab is free!)
-
-### About GPU Training:
-- ✅ **RECOMMENDED** - Fast (12-16 hours)
-- ✅ Free on Google Colab
-- ✅ Better performance
-- ✅ Easier to use
-
-### About the Model:
-- Base: GPT-J-6B (6 billion parameters)
-- Method: LoRA/PEFT (only trains ~1% of parameters)
-- Size: ~100 MB (adapter only)
-- Quality: High (60K training examples)
-
----
-
 ## ✅ Checklist
 
 **Before Training:**

@@ -51,11 +51,11 @@ from huggingface_hub import login
 
 HF_TOKEN = "hf_..."  # 👈 PASTE YOUR TOKEN HERE
 
-if not HF_TOKEN:
-    print("⚠️  กรุณาใส่ Hugging Face token")
-else:
+if HF_TOKEN:
     login(token=HF_TOKEN)
     print("✅ Login สำเร็จ")
+else:
+    print("กรุณาใส่ Hugging Face token")
 ```
 
 ### Step 4: Run All Cells

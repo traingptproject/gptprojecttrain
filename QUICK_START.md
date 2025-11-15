@@ -56,8 +56,6 @@ pip install torch transformers accelerate datasets scikit-learn
 python fine_tune.py
 ```
 
-⚠️ **หมายเหตุ:** การฝึกโมเดลใช้เวลา 4-72 ชั่วโมง ขึ้นอยู่กับฮาร์ดแวร์
-
 ### 4. รัน API (หลังฝึกเสร็จ)
 
 ```bash

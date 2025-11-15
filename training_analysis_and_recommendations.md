@@ -50,4 +50,4 @@ The new training script is simplified and more robust. It directly uses the para
 
 ## 5. Conclusion
 
-The rapid loss decrease observed in the initial training run is a clear warning sign of overfitting. By taking immediate corrective action and adopting the improved V2 workflow, we can mitigate this risk and proceed with training a more robust and generalizable model. The V2 workflow is designed to be more stable, easier to manage, and better aligned with the project's goal of creating an enterprise-ready AI model.
+The rapid loss decrease observed in the initial training run indicates overfitting. By taking immediate corrective action and adopting the improved V2 workflow, we can mitigate this risk and proceed with training a more robust and generalizable model. The V2 workflow is designed to be more stable, easier to manage, and better aligned with the project's goal of creating an enterprise-ready AI model.

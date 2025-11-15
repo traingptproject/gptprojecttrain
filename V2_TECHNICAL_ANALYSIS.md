@@ -181,21 +181,6 @@ def scrape_website(url):
 
 ---
 
-## ⚠️ ข้อจำกัดที่ต้องเข้าใจ
-
-### 1. ขึ้นกับคุณภาพข้อมูล
-
-**โมเดลจะดีเท่าที่ข้อมูลดี:**
-
-| ถ้าข้อมูลมี... | โมเดลจะ... |
-|----------------|------------|
-| ✅ Code examples ที่ถูกต้อง | เขียนโค้ดได้ดี |
-| ✅ Detailed explanations | อธิบายได้ชัดเจน |
-| ✅ Best practices | แนะนำได้ถูกต้อง |
-| ❌ Outdated information | ให้คำตอบที่ล้าสมัย |
-| ❌ Incorrect examples | เขียนโค้ดผิด |
-| ❌ Biased data | มี bias ในคำตอบ |
-
 ### 2. ไม่ใช่ "Uncensored" โดยอัตโนมัติ
 
 **ความเข้าใจผิดที่พบบ่อย:**
@@ -294,7 +279,7 @@ Provide detailed, technical, and accurate responses."""
 
 #### 1. Loss Metrics
 
-| Metric | Good | Warning | Bad |
+| Metric | Good | Moderate | Poor |
 |--------|------|---------|-----|
 | Final Train Loss | 0.8-1.5 | 0.3-0.8 | <0.3 |
 | Final Eval Loss | 0.9-1.6 | 0.5-0.9 | <0.5 |

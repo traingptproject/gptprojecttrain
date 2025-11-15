@@ -92,8 +92,6 @@ python create_dataset_only.py
 
 ### Step 4: Download Base Model and Fine-tune
 
-**⚠️ This step requires ~24 GB of disk space and may take 4-72 hours depending on hardware.**
-
 ```bash
 # Download model and start fine-tuning
 python fine_tune.py
