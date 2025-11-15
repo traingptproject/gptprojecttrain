@@ -55,7 +55,17 @@ def setup_environment():
     print(f"✅ Python Version: {sys.version.split()[0]}")
 
 
-def load_and_prepare_data(config: WorkflowConfig):
+def tokenize_function(examples, tokenizer, text_column, max_length):
+    """Tokenize text data"""
+    return tokenizer(
+        examples[text_column],
+        truncation=True,
+        max_length=max_length,
+        padding=False,  # Will be done by data collator
+    )
+
+
+def load_and_prepare_data(config: WorkflowConfig, tokenizer):
     """Load and prepare dataset"""
     print_header("Data Loading")
     
@@ -73,6 +83,22 @@ def load_and_prepare_data(config: WorkflowConfig):
         # Show sample
         print(f"\n📄 Sample from training set:")
         print(f"   {train_dataset[0][config.data.text_column][:200]}...")
+        
+        # Tokenize datasets
+        print(f"\n📝 Tokenizing datasets...")
+        train_dataset = train_dataset.map(
+            lambda x: tokenize_function(x, tokenizer, config.data.text_column, config.model.model_max_length),
+            batched=True,
+            remove_columns=train_dataset.column_names,
+            desc="Tokenizing train dataset",
+        )
+        eval_dataset = eval_dataset.map(
+            lambda x: tokenize_function(x, tokenizer, config.data.text_column, config.model.model_max_length),
+            batched=True,
+            remove_columns=eval_dataset.column_names,
+            desc="Tokenizing eval dataset",
+        )
+        print(f"✅ Tokenization complete")
         
         return train_dataset, eval_dataset
         
@@ -270,11 +296,11 @@ def main():
     # Save configuration
     save_config(config, config.training.output_dir)
     
-    # Load data
-    train_dataset, eval_dataset = load_and_prepare_data(config)
-    
-    # Setup model and tokenizer
+    # Setup model and tokenizer first (need tokenizer for data prep)
     model, tokenizer = setup_model_and_tokenizer(config)
+    
+    # Load and tokenize data
+    train_dataset, eval_dataset = load_and_prepare_data(config, tokenizer)
     
     # Create trainer
     trainer = create_trainer(model, tokenizer, train_dataset, eval_dataset, config)
