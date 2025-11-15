@@ -69,9 +69,39 @@ def load_data(tokenizer):
     try:
         print(f"📥 Loading dataset: {DATASET_CONFIG['train_file']}")
         
-        # Load JSONL dataset
-        dataset = load_dataset('json', data_files=DATASET_CONFIG['train_file'])
-        dataset = dataset['train']
+        # Load JSONL dataset - read line by line to handle inconsistent columns
+        import json
+        data_list = []
+        with open(DATASET_CONFIG['train_file'], 'r', encoding='utf-8') as f:
+            for line in f:
+                try:
+                    item = json.loads(line.strip())
+                    # Only keep instruction, input, output columns
+                    filtered_item = {
+                        'instruction': item.get('instruction', ''),
+                        'input': item.get('input', ''),
+                        'output': item.get('output', '')
+                    }
+                    data_list.append(filtered_item)
+                except:
+                    continue
+        
+        print(f"✅ Loaded {len(data_list):,} samples")
+        
+        # Convert to dataset
+        from datasets import Dataset
+        dataset = Dataset.from_list(data_list)
+        
+        # Create text field for training
+        def format_text(example):
+            if example['input']:
+                text = f"### Instruction:\n{example['instruction']}\n\n### Input:\n{example['input']}\n\n### Response:\n{example['output']}"
+            else:
+                text = f"### Instruction:\n{example['instruction']}\n\n### Response:\n{example['output']}"
+            return {'text': text}
+        
+        print(f"\n📝 Formatting dataset...")
+        dataset = dataset.map(format_text, desc="Formatting")
         
         # Limit samples
         train_samples = DATASET_CONFIG['train_samples']
