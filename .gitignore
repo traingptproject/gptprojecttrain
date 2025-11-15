@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.tmp
+
+# Virtual environments
+venv/
+.venv/
+*/Scripts/
+
+# Datasets and caches
+*.jsonl
+training_data*.jsonl
+*.parquet
+.cache/
+.cache/**
+/.huggingface/
+**/.cache/
+**/.huggingface/
+HF_HOME/
+
+# Hugging Face cache and models
+huggingface/
+**/huggingface/**
+/.cache/huggingface/**
+/mnt/c/Users/*/.cache/huggingface/**
+
+# Model outputs and checkpoints
+*dlnkgpt-model-output*/
+output/
+checkpoints/
+runs/
+train_logs/
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Security
+*.env
+.env*
+*.token
+*token*
+HF_TOKEN*
+GITHUB_TOKEN*
+install_pytorch.sh
