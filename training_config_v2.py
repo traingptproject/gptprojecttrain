@@ -78,7 +78,7 @@ EARLY_STOPPING = {
 
 # Dataset Configuration (same as V1)
 DATASET_CONFIG = {
-    "train_file": "training_data_1m_final.jsonl",
+    "train_file": "/content/drive/MyDrive/Colab Notebooks/training_data_1m_final.jsonl",
     "train_samples": 54000,
     "eval_samples": 6000,
     "max_length": 512,
