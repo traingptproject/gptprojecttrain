@@ -436,7 +436,6 @@ Create `README.md` in the output directory:
 ```markdown
 ---
 language: en
-license: apache-2.0
 tags:
 - text-generation
 - gpt-j
